@@ -6,7 +6,14 @@ import AlphabetFilter from "@/components/AlphabetFilter";
 import { mockNames } from "@/lib/mockNames";
 import { Name } from "@/types/name";
 
-export default function LangHomePage() {
+interface Props {
+  params: {
+    lang: string;
+  };
+}
+
+export default function LangHomePage({ params }: Props) {
+  const lang = params.lang;
   const [search, setSearch] = useState("");
   const [selectedLetter, setSelectedLetter] = useState("");
 
@@ -25,14 +32,14 @@ export default function LangHomePage() {
   }, [search, selectedLetter]);
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-8">
+    <main className="max-w-5xl mx-auto p-4">
       {/* HERO */}
       <section className="text-center mb-10">
         <h1 className="text-4xl font-bold text-blue-800 mb-3">
           Ismlar Ma’nosi
         </h1>
         <p className="text-gray-600 text-lg">
-          O‘zingiz yoki farzandingiz uchun eng chiroyli va mazmunli ismni toping
+          Farzandingiz uchun eng chiroyli va mazmunli ismni toping
         </p>
       </section>
 
@@ -43,9 +50,8 @@ export default function LangHomePage() {
 
       {/* ALPHABET FILTER */}
       <div className="mb-10">
-        <AlphabetFilter selected={selectedLetter} onSelect={setSelectedLetter} />
+        <AlphabetFilter selected={selectedLetter} onSelect={setSelectedLetter} lang={lang} />
       </div>
-
     </main>
   );
 }

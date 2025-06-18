@@ -26,4 +26,13 @@ export const mockNames = [
     gender: "female",
     lang: "uz",
   },
+  {
+  id: "999",
+  name: "Elyor",
+  meaning: "Do‘st, yaqin kishi",
+  gender: "male",           // ✅ kerakli qiymat
+  category: "arab",
+  alphabet: "e",            // ✅ har doim kichik harf bo‘lsin yaxshilik uchun
+  lang: "uz",
+}
 ];
