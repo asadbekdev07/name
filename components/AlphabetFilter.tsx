@@ -1,15 +1,15 @@
-"use client"
+"use client";
+
 import { useRouter } from "next/navigation";
 
 interface Props {
-  selected: string;
-  onSelect: (letter: string) => void;
   lang: string;
+  selected: string;
 }
 
 const ALPHABETS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-export default function AlphabetFilter({ selected, onSelect, lang }: Props) {
+export default function AlphabetFilter({ selected, lang }: Props) {
   const router = useRouter();
 
   const handleClick = (letter: string) => {
@@ -23,7 +23,7 @@ export default function AlphabetFilter({ selected, onSelect, lang }: Props) {
           key={letter}
           onClick={() => handleClick(letter)}
           className={`px-3 py-1 border rounded-lg text-sm transition ${
-            selected === letter
+            selected.toLowerCase() === letter.toLowerCase()
               ? "bg-blue-600 text-white"
               : "hover:bg-blue-100"
           }`}
