@@ -1,3 +1,5 @@
+// app/[lang]/search/[query]/page.tsx
+
 import { mockNames } from "@/lib/mockNames";
 import { Name } from "@/types/name";
 import NameCard from "@/components/NameCard";
@@ -20,13 +22,11 @@ export default function SearchResultPage({ params }: Props) {
 
   return (
     <main className="max-w-5xl mx-auto p-4">
-      {/* Sarlavha */}
       <h1 className="text-xl font-semibold mb-6 text-gray-700">
         Sizning so‘rovingiz «{query}» bo‘yicha topilgan natijalar soni:{" "}
         <span className="text-blue-700 font-bold">{filtered.length}</span>
       </h1>
 
-      {/* Natijalar */}
       {filtered.length > 0 ? (
         <div className="grid gap-4">
           {filtered.map((item) => (

@@ -1,15 +1,13 @@
-"use client";
-
+"use client"
+import HeaderSearchWrapper from "./HeaderSearchWrapper";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import SearchInput from "./SearchInput";
 
 export default function Header() {
   const { lang } = useParams();
 
   return (
     <header className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 py-3 shadow-sm border-b bg-white sticky top-0 z-10">
-      {/* Chap tomon: Home tugmasi */}
       <Link
         href={`/${lang}`}
         className="text-blue-600 font-bold text-lg flex items-center gap-1 whitespace-nowrap"
@@ -31,9 +29,8 @@ export default function Header() {
         Bosh sahifa
       </Link>
 
-      {/* O'ng tomon: Search input */}
       <div className="w-full sm:max-w-xs">
-        <SearchInput />
+        <HeaderSearchWrapper />
       </div>
     </header>
   );

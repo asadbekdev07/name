@@ -1,34 +1,41 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-export default function SearchInput() {
+interface Props {
+  search: string;
+  onSearchChange: (val: string) => void;
+}
+
+export default function SearchInput({ search, onSearchChange }: Props) {
   const router = useRouter();
-  const [value, setValue] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!value.trim()) return;
+  const handleSearch = () => {
+    if (search.trim()) {
+      router.push(`/uz/search/${search.trim().toLowerCase()}`);
+    }
+  };
 
-    // Foydalanuvchini natijalar sahifasiga yo'naltiramiz
-    router.push(`/uz/search?q=${value}`);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 max-w-xl mx-auto">
+    <div className="flex items-center gap-2">
       <input
-        type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Ismni kiriting..."
-        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+        value={search}
+        onChange={(e) => onSearchChange(e.target.value)}
+        onKeyDown={handleKeyDown} // <-- bu qator qo‘shildi
+        placeholder="Ism qidiring"
+        className="border rounded px-4 py-2 w-full"
       />
       <button
-        type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        onClick={handleSearch}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
       >
         Qidirish
       </button>
-    </form>
+    </div>
   );
 }
