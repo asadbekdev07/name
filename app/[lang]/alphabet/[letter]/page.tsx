@@ -1,37 +1,43 @@
-"use client"
+// AT TOP
+"use client"; // bu faqat kerakli joyda, ya'ni `AlphabetPage`da
+
 import { mockNames } from "@/lib/mockNames";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Name } from "@/types/name";
 import AlphabetFilter from "@/components/AlphabetFilter";
 
-interface Props {
-  params: {
-    lang: string;
-    letter: string;
-  };
-}
+export default function AlphabetPage() {
+  const params = useParams();
+  const lang = params.lang as string;
+  const letter = params.letter as string;
 
-export default function AlphabetPage({ params }: Props) {
-  const { letter, lang } = params;
+  const [filtered, setFiltered] = useState<Name[]>([]);
 
-  const filtered = mockNames.filter(
-    (item: Name) =>
-      item.alphabet.toLowerCase() === letter.toLowerCase() &&
-      item.lang === lang
-  );
+  useEffect(() => {
+    const result = mockNames.filter(
+      (item) =>
+        item.alphabet.toLowerCase() === letter.toLowerCase() &&
+        item.lang === lang
+    );
+    setFiltered(result);
+  }, [lang, letter]);
 
   return (
     <main className="max-w-5xl mx-auto p-4">
-      {/* ✅ ALIFBO FILTRI HEADERDAN KEYIN KO'RINSIN */}
-      <div className="mb-6">
-        <AlphabetFilter selected={letter.toUpperCase()} onSelect={() => {}} lang={lang} />
-      </div>
-
-      {/* Sarlavha */}
       <h1 className="text-2xl font-bold text-blue-700 mb-4">
         “{letter.toUpperCase()}” harfi bilan boshlanadigan ismlar
       </h1>
 
-      {/* Ism ro'yxati */}
+      {/* AlphabetFilter client component — no problem now */}
+      <div className="mb-6">
+        <AlphabetFilter
+          selected={letter.toUpperCase()}
+          onSelect={() => {}}
+          lang={lang}
+        />
+      </div>
+
       {filtered.length > 0 ? (
         <ul className="space-y-3">
           {filtered.map((item) => (

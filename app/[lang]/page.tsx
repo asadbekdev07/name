@@ -1,43 +1,20 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import SearchInput from "@/components/SearchInput";
 import AlphabetFilter from "@/components/AlphabetFilter";
-import { mockNames } from "@/lib/mockNames";
-import { Name } from "@/types/name";
 
-interface Props {
-  params: {
-    lang: string;
-  };
-}
-
-export default function LangHomePage({ params }: Props) {
-  const lang = params.lang;
+export default function LangHomePage() {
+  const params = useParams();
+  const lang = params.lang as string;
   const [search, setSearch] = useState("");
-  const [selectedLetter, setSelectedLetter] = useState("");
-
-  const filteredNames = useMemo(() => {
-    return mockNames.filter((item: Name) => {
-      const matchesSearch = item.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-
-      const matchesLetter = selectedLetter
-        ? item.alphabet.toLowerCase() === selectedLetter.toLowerCase()
-        : true;
-
-      return matchesSearch && matchesLetter;
-    });
-  }, [search, selectedLetter]);
 
   return (
     <main className="max-w-5xl mx-auto p-4">
       {/* HERO */}
       <section className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-blue-800 mb-3">
-          Ismlar Ma’nosi
-        </h1>
+        <h1 className="text-4xl font-bold text-blue-800 mb-3">Ismlar Ma’nosi</h1>
         <p className="text-gray-600 text-lg">
           Farzandingiz uchun eng chiroyli va mazmunli ismni toping
         </p>
@@ -50,7 +27,7 @@ export default function LangHomePage({ params }: Props) {
 
       {/* ALPHABET FILTER */}
       <div className="mb-10">
-        <AlphabetFilter selected={selectedLetter} onSelect={setSelectedLetter} lang={lang} />
+        <AlphabetFilter selected="" onSelect={() => {}} lang={lang} />
       </div>
     </main>
   );
