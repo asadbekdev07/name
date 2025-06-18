@@ -1,34 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname, useParams } from "next/navigation";
+import SearchInput from "./SearchInput";
 
 export default function HeaderSearchWrapper() {
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const { lang } = useParams();
+  const pathname = usePathname();
+  const { lang } = useParams(); // "uz", "ru" va h.k.
 
-  const handleSearch = () => {
+  // Sahifa o'zgarganda inputni tozalash
+  useEffect(() => {
+    setSearch("");
+  }, [pathname]);
+
+  const handleSubmit = () => {
     if (search.trim()) {
       router.push(`/${lang}/search/${search.trim().toLowerCase()}`);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
   return (
-    <input
-      type="text"
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      onKeyDown={handleKeyDown}
-      placeholder="Ism qidirish..."
-      className="px-3 py-2 border rounded-md w-full max-w-xs"
+    <SearchInput
+      search={search}
+      onSearchChange={setSearch}
+      onSubmit={handleSubmit}
     />
   );
 }

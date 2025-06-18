@@ -1,5 +1,3 @@
-// app/[lang]/search/[query]/page.tsx
-
 import { mockNames } from "@/lib/mockNames";
 import { Name } from "@/types/name";
 import NameCard from "@/components/NameCard";
@@ -9,6 +7,14 @@ interface Props {
     lang: string;
     query: string;
   };
+}
+
+// Har bir so'z bosh harfini katta qiladi: "ali akbar" -> "Ali Akbar"
+function capitalizeWords(str: string): string {
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 }
 
 export default function SearchResultPage({ params }: Props) {
@@ -23,8 +29,8 @@ export default function SearchResultPage({ params }: Props) {
   return (
     <main className="max-w-5xl mx-auto p-4">
       <h1 className="text-xl font-semibold mb-6 text-gray-700">
-        Sizning so‘rovingiz «{query}» bo‘yicha topilgan natijalar soni:{" "}
-        <span className="text-blue-700 font-bold">{filtered.length}</span>
+        Sizning so‘rovingiz „{capitalizeWords(query)}“ bo‘yicha topilgan natijalar soni: {""}
+        <span className="text-blue-700 font-bold">{filtered.length} ta</span>
       </h1>
 
       {filtered.length > 0 ? (
