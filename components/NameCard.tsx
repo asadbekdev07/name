@@ -1,34 +1,50 @@
-import { Name } from "@/types/name";
+// components/NameCard.tsx
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+import { Eye, Heart } from "lucide-react";
 
 interface Props {
-  name: Name;
+  id: string;
+  name: string;
+  meaning: string;
+  views?: number;
+  likes?: number;
+  lang: string;
 }
 
-export default function NameCard({ name }: Props) {
-  const originLabelMap: Record<string, string> = {
-    arab: "Arab",
-    persian: "Fors",
-    turk: "Turk",
-  };
-
+export default function NameCard({
+  id,
+  name,
+  meaning,
+  views = 0,
+  likes = 0,
+  lang,
+}: Props) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition">
-      <h3 className="text-xl font-bold text-blue-800">{name.name}</h3>
+    <div className="border rounded-xl p-4 shadow-sm bg-white hover:bg-gray-50 transition space-y-2">
+      <Link
+        href={`/${lang}/name/${name.toLowerCase()}`}
+        className="text-xl font-semibold text-blue-700 hover:underline"
+      >
+        {name}
+      </Link>
+      <p className="text-gray-600 text-sm">{meaning}</p>
 
-      <p className="text-gray-600 mt-1 text-sm">{name.meaning}</p>
+      <div className="flex items-center justify-between text-sm mt-2">
+        <div className="flex gap-4 text-gray-500">
+          <span className="flex items-center gap-1">
+            <Heart className="w-4 h-4 text-red-500" /> {likes}
+          </span>
+          <span className="flex items-center gap-1">
+            <Eye className="w-4 h-4" /> {views}
+          </span>
+        </div>
 
-      <div className="flex flex-wrap items-center gap-2 mt-4">
-        <Badge variant="secondary">{name.gender === "male" ? "Erkak" : "Ayol"}</Badge>
-
-        {name.origin && (
-          <Link href={`/${name.lang}/category/${name.origin}`}>
-            <Badge variant="outline" className="hover:bg-gray-100">
-              {originLabelMap[name.origin] || name.origin}
-            </Badge>
-          </Link>
-        )}
+        <Link
+          href={`/${lang}/name/${name.toLowerCase()}`}
+          className="text-blue-600 text-sm hover:underline"
+        >
+          Batafsil →
+        </Link>
       </div>
     </div>
   );

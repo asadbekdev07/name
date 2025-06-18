@@ -1,21 +1,34 @@
-import { Search } from "lucide-react";
+"use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-interface Props {
-  search: string;
-  onSearchChange: (value: string) => void;
-}
+export default function SearchInput() {
+  const router = useRouter();
+  const [value, setValue] = useState("");
 
-export default function SearchInput({ search, onSearchChange }: Props) {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!value.trim()) return;
+
+    // Foydalanuvchini natijalar sahifasiga yo'naltiramiz
+    router.push(`/uz/search?q=${value}`);
+  };
+
   return (
-    <div className="relative w-full">
+    <form onSubmit={handleSubmit} className="flex gap-2 max-w-xl mx-auto">
       <input
         type="text"
-        placeholder="Ism qidirish..."
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Ismni kiriting..."
+        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
       />
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-    </div>
+      <button
+        type="submit"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      >
+        Qidirish
+      </button>
+    </form>
   );
 }
