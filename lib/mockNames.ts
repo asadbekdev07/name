@@ -45,6 +45,267 @@ export const mockNames = [
     lang: "uz", // til
   },
   {
+    id: "6",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "7",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "8",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "9",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "10",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "11",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "12",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "13",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "14",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "15",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "16",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "17",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "18",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "19",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "20",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "21",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "22",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "23",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "24",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "25",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "26",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "27",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "28",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "29",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "30",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "31",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "32",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "33",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "34",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "Fors-tojikcha", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
     id: "999",
     name: "Elyor",
     meaning: "Do‘st, yaqin kishi",
