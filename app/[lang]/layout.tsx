@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export default function LangLayout({
@@ -9,6 +10,7 @@ export default function LangLayout({
     <div>
       <Header />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 }
