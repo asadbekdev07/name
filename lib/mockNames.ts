@@ -40,7 +40,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -49,7 +49,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -58,7 +58,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -67,7 +67,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -76,7 +76,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -85,7 +85,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -94,7 +94,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -103,7 +103,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -112,7 +112,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -121,7 +121,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -130,7 +130,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -139,7 +139,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -148,7 +148,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -157,7 +157,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -166,7 +166,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -175,7 +175,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -184,7 +184,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -193,7 +193,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -202,7 +202,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -211,7 +211,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -220,7 +220,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -229,7 +229,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -238,7 +238,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -247,7 +247,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -256,7 +256,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -265,7 +265,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -274,7 +274,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -283,7 +283,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -292,7 +292,7 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
@@ -301,7 +301,16 @@ export const mockNames = [
     name: "Anora",
     meaning: "Qizil holli, norli qiz.",
     alphabet: "a",
-    category: "Fors-tojikcha", // turkum
+    category: "persian", // turkum
+    gender: "female", // jins
+    lang: "uz", // til
+  },
+  {
+    id: "35",
+    name: "Anora",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "persian", // turkum
     gender: "female", // jins
     lang: "uz", // til
   },
