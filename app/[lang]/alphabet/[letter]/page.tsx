@@ -1,4 +1,3 @@
-// app/[lang]/alphabet/[letter]/page.tsx
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
@@ -15,17 +14,23 @@ interface Props {
   };
 }
 
+const ITEMS_PER_PAGE = 20;
+
 export default function AlphabetPage({ params }: Props) {
   const { letter, lang } = params;
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const gender = searchParams.get("gender") || "";
+  const pageParam = searchParams.get("page") || "1";
+  const currentPage = parseInt(pageParam);
 
   const updateQuery = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
     if (value) newParams.set(key, value);
     else newParams.delete(key);
+    // Reset page to 1 when changing filter
+    if (key !== "page") newParams.set("page", "1");
     router.push(`?${newParams.toString()}`);
   };
 
@@ -37,6 +42,13 @@ export default function AlphabetPage({ params }: Props) {
         (!gender || item.gender === gender)
     );
   }, [letter, lang, gender]);
+
+  const paginated = filtered.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
 
   return (
     <main className="max-w-5xl mx-auto p-4">
@@ -61,13 +73,15 @@ export default function AlphabetPage({ params }: Props) {
         ))}
       </div>
 
+      {/* Title */}
       <h1 className="text-2xl font-bold text-blue-700 mb-4">
         “{letter.toUpperCase()}” harfi bilan boshlanadigan ismlar
       </h1>
 
-      {filtered.length > 0 ? (
+      {/* Results */}
+      {paginated.length > 0 ? (
         <ul className="bg-gray-50 rounded-md shadow-sm border border-gray-200">
-          {filtered.map((item) => (
+          {paginated.map((item) => (
             <SimpleNameItem
               key={item.id}
               id={item.id}
@@ -79,6 +93,29 @@ export default function AlphabetPage({ params }: Props) {
         </ul>
       ) : (
         <p className="text-gray-500">Bu filtrlarga mos ism topilmadi.</p>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2">
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set("page", (i + 1).toString());
+            return (
+              <a
+                key={i}
+                href={`?${newParams.toString()}`}
+                className={`px-3 py-1 border rounded ${
+                  i + 1 === currentPage
+                    ? "bg-blue-600 text-white"
+                    : "hover:bg-gray-200"
+                }`}
+              >
+                {i + 1}
+              </a>
+            );
+          })}
+        </div>
       )}
     </main>
   );
