@@ -3,13 +3,12 @@ import Link from "next/link";
 import { Mars, Venus } from "lucide-react";
 
 interface Props {
-  id: string;
   name: string;
   lang: string;
   gender: string;
 }
 
-export default function SimpleNameItem({ id, name, lang, gender }: Props) {
+export default function SimpleNameItem({ name, lang, gender }: Props) {
   const genderLabel =
     gender === "male"
       ? {
@@ -26,7 +25,7 @@ export default function SimpleNameItem({ id, name, lang, gender }: Props) {
   return (
     <li className="border-b border-gray-200 last:border-none">
       <Link
-        href={`/${lang}/name/${id}`}
+        href={`/${lang}/name/${name.toLowerCase()}`}
         className="flex items-center justify-between py-3 px-4 hover:bg-blue-50 transition"
       >
         <span className="text-blue-900 font-medium">{name}</span>

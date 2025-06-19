@@ -101,7 +101,6 @@ export default function CategoryPage({ params }: Props) {
           {paginated.map((item) => (
             <SimpleNameItem
               key={item.id}
-              id={item.id}
               name={item.name}
               lang={item.lang}
               gender={item.gender}
