@@ -17,13 +17,15 @@ export default function LangHomePage() {
     { id: "2", name: "Shirin", gender: "female", lang },
     { id: "3", name: "Zaynab", gender: "female", lang },
     { id: "4", name: "Mohira", gender: "female", lang },
+    { id: "5", name: "Anora", gender: "female", lang },
   ];
 
   const topMaleNames = [
-    { id: "5", name: "Ali", gender: "male", lang },
-    { id: "6", name: "Elyor", gender: "male", lang },
-    { id: "7", name: "Umar", gender: "male", lang },
-    { id: "8", name: "Anvar", gender: "male", lang },
+    { id: "6", name: "Ali", gender: "male", lang },
+    { id: "7", name: "Elyor", gender: "male", lang },
+    { id: "8", name: "Umar", gender: "male", lang },
+    { id: "9", name: "Anvar", gender: "male", lang },
+    { id: "10", name: "Asadbek", gender: "male", lang },
   ];
 
   return (
