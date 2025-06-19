@@ -1,8 +1,10 @@
 "use client";
+
 import { mockNames } from "@/lib/mockNames";
 import AlphabetFilter from "@/components/AlphabetFilter";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { categoryLabels } from "@/lib/categoryLabels";
 
 interface Props {
   params: {
@@ -54,9 +56,15 @@ export default function NameDetailPage({ params }: Props) {
         <strong>Ma’nosi:</strong> {matched.meaning}
       </p>
 
-      {/* Category */}
+      {/* Category with link */}
       <p className="text-gray-500 text-sm mb-6">
-        <strong>Kategoriya:</strong> {matched.category}
+        <strong>Turkum:</strong>{" "}
+        <Link
+          href={`/${lang}/category/${matched.category}`}
+          className="text-blue-600 hover:underline"
+        >
+          {categoryLabels[matched.category] || matched.category}
+        </Link>
       </p>
 
       {/* Similar names */}
