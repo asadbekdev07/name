@@ -5,6 +5,7 @@ import { useState } from "react";
 import SearchInput from "@/components/SearchInput";
 import AlphabetFilter from "@/components/AlphabetFilter";
 import TopSearchedNames from "@/components/TopSearchedNames";
+import CategoryList from "@/components/CategoryList";
 
 export default function LangHomePage() {
   const params = useParams();
@@ -53,8 +54,10 @@ export default function LangHomePage() {
       {/* Most searched names */}
       <div className="space-y-12">
         <TopSearchedNames maleNames={topMaleNames} femaleNames={topFemaleNames} />
-
       </div>
+
+      <CategoryList lang={lang} />
+
     </main>
   );
 }
