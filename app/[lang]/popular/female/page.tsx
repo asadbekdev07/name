@@ -1,4 +1,8 @@
-import { mockNames } from "@/lib/mockNames";
+"use client";
+
+import { useEffect, useState } from "react";
+import { collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Name } from "@/types/name";
 import NameCard from "@/components/NameCard";
 
@@ -10,11 +14,35 @@ interface Props {
 
 export default function PopularFemalePage({ params }: Props) {
   const { lang } = params;
+  const [femaleNames, setFemaleNames] = useState<Name[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const topFemaleNames = mockNames
-    .filter((item: Name) => item.gender === "female" && item.lang === lang)
-    .sort((a, b) => (b.views ?? 0) - (a.views ?? 0))
-    .slice(0, 100);
+  useEffect(() => {
+    async function fetchTopFemaleNames() {
+      try {
+        const namesRef = collection(db, "names");
+        const q = query(
+          namesRef,
+          where("lang", "==", lang),
+          where("gender", "==", "female"),
+          orderBy("views", "desc"),
+          limit(100)
+        );
+        const snapshot = await getDocs(q);
+        const names: Name[] = snapshot.docs.map((doc) => ({
+          ...(doc.data() as Name),
+          id: doc.id,
+        }));
+        setFemaleNames(names);
+      } catch (error) {
+        console.error("Error fetching female names:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTopFemaleNames();
+  }, [lang]);
 
   return (
     <main className="max-w-5xl mx-auto p-4">
@@ -22,9 +50,11 @@ export default function PopularFemalePage({ params }: Props) {
         Eng ko‘p qidirilgan 100 ta ayollar ismlari
       </h1>
 
-      {topFemaleNames.length > 0 ? (
+      {loading ? (
+        <p className="text-gray-500">Yuklanmoqda...</p>
+      ) : femaleNames.length > 0 ? (
         <div className="grid gap-4">
-          {topFemaleNames.map((item) => (
+          {femaleNames.map((item) => (
             <NameCard
               key={item.id}
               id={item.id}

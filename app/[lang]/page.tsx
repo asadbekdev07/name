@@ -53,7 +53,7 @@ export default function LangHomePage() {
 
       {/* Most searched names */}
       <div className="space-y-12">
-        <TopSearchedNames maleNames={topMaleNames} femaleNames={topFemaleNames} />
+        <TopSearchedNames lang={lang} />
       </div>
 
       <CategoryList lang={lang} />
