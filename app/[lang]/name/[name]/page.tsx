@@ -9,7 +9,8 @@ import Link from "next/link";
 import { categoryLabels } from "@/lib/categoryLabels";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
-import LoadingSpinner from "@/components/LoadingSpinner"; // LoadingSpinner import qilindi
+import LoadingSpinner from "@/components/LoadingSpinner";
+import Comments from "@/components/Comments";
 
 export default function NameDetailPage() {
   const params = useParams();
@@ -24,7 +25,7 @@ export default function NameDetailPage() {
 
   if (!matched) return notFound();
 
-  // LocalStorage orqali liked statusini saqlash
+  // LocalStorage dan like holatini olish
   const [liked, setLiked] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem(`liked_${matched.name.toLowerCase()}`) === "true";
@@ -32,7 +33,7 @@ export default function NameDetailPage() {
     return false;
   });
 
-  // likes va views ning boshlang‘ich qiymati null, Firestore’dan kelguncha
+  // likes va views ning dastlabki qiymati null — loading ko‘rsatish uchun
   const [likes, setLikes] = useState<number | null>(null);
   const [views, setViews] = useState<number | null>(null);
 
@@ -44,21 +45,20 @@ export default function NameDetailPage() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setLikes(data.likes || 0);
-          setViews(data.views || 0);
+          setLikes(data.likes ?? 0);
+          setViews(data.views ?? 0);
 
-          // Views ni 1 ga oshirish
+          // Views ni oshirish Firestore-da
           await updateDoc(docRef, { views: increment(1) });
           setViews((v) => (v !== null ? v + 1 : 1));
         } else {
-          // Agar hujjat yo'q bo'lsa yaratish
+          // Hujjat mavjud bo‘lmasa yangi yaratish
           await setDoc(docRef, { likes: 0, views: 1 });
           setLikes(0);
           setViews(1);
         }
       } catch (error) {
         console.error("Firestore fetch error:", error);
-        // Muammo bo'lsa ham 0 qiymat qo'yish
         setLikes(0);
         setViews(0);
       }
@@ -66,7 +66,7 @@ export default function NameDetailPage() {
     fetchData();
   }, [matched.name]);
 
-  // LocalStorage ni update qilish uchun effect
+  // localStorage update qilish
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (liked) {
@@ -77,12 +77,14 @@ export default function NameDetailPage() {
     }
   }, [liked, matched.name]);
 
+  // Like tugmasi bosilganda
   const handleLikeToggle = async () => {
     try {
-      const change = liked ? -1 : 1;
-      setLiked(!liked);
-      setLikes((prev) => (prev !== null ? prev + change : change));
-      await updateDoc(docRef, { likes: increment(change) });
+      if (liked) return; // faqat 1 marta bosish ruxsat — keyin o‘zgarmasligi uchun
+
+      setLiked(true);
+      setLikes((prev) => (prev !== null ? prev + 1 : 1));
+      await updateDoc(docRef, { likes: increment(1) });
     } catch (error) {
       console.error("Error updating likes:", error);
     }
@@ -119,7 +121,7 @@ export default function NameDetailPage() {
       person.lang === lang
   );
 
-  // Loading spinner likes yoki views hali null bo'lsa ko'rsatiladi
+  // Loading spinner ko‘rsatish
   if (likes === null || views === null) {
     return (
       <main className="min-h-screen flex items-center justify-center">
@@ -154,6 +156,7 @@ export default function NameDetailPage() {
             className="flex items-center gap-1 text-lg cursor-pointer"
             aria-pressed={liked}
             aria-label={liked ? "Like o'chirish" : "Like berish"}
+            disabled={liked} // bosilgan bo‘lsa, tugmani o‘chirish
           >
             <span className={liked ? "text-red-500" : "text-gray-400"}>
               {liked ? "❤️" : "🤍"}
@@ -248,12 +251,8 @@ export default function NameDetailPage() {
           </div>
         )}
 
-        <div className="mt-12 border-t pt-6">
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">Fikrlar</h3>
-          <p className="text-sm text-gray-500">
-            Bu yerga foydalanuvchi fikrlarini yozish imkoniyati keyinchalik qo‘shiladi.
-          </p>
-        </div>
+        {/* Fikrlar bo‘limi */}
+        <Comments nameId={matched.name.toLowerCase()} />
       </div>
     </main>
   );
