@@ -72,29 +72,36 @@ export default function NameDetailPage() {
     fetchData();
   }, [matched.name]);
 
-  // localStorage update qilish
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (liked) {
-        localStorage.setItem(`liked_${matched.name.toLowerCase()}`, "true");
-      } else {
-        localStorage.removeItem(`liked_${matched.name.toLowerCase()}`);
-      }
+  if (typeof window !== "undefined") {
+    if (liked) {
+      localStorage.setItem(`liked_${matched.name.toLowerCase()}`, "true");
+    } else {
+      localStorage.removeItem(`liked_${matched.name.toLowerCase()}`);
     }
-  }, [liked, matched.name]);
+  }
+}, [liked, matched.name]);
+
 
   // Like tugmasi bosilganda
   const handleLikeToggle = async () => {
-    try {
-      if (liked) return; // faqat 1 marta bosish ruxsat — keyin o‘zgarmasligi uchun
-
+  try {
+    if (liked) {
+      // unlike qilinmoqda
+      setLiked(false);
+      setLikes((prev) => (prev !== null ? prev - 1 : 0));
+      await updateDoc(docRef, { likes: increment(-1) });
+    } else {
+      // like qilinmoqda
       setLiked(true);
       setLikes((prev) => (prev !== null ? prev + 1 : 1));
       await updateDoc(docRef, { likes: increment(1) });
-    } catch (error) {
-      console.error("Error updating likes:", error);
     }
-  };
+  } catch (error) {
+    console.error("Error toggling like:", error);
+  }
+};
+
 
   const handleShare = () => {
     if (navigator.share) {
@@ -164,7 +171,6 @@ export default function NameDetailPage() {
             className="flex items-center gap-1 text-lg cursor-pointer"
             aria-pressed={liked}
             aria-label={liked ? "Like o'chirish" : "Like berish"}
-            disabled={liked} // bosilgan bo‘lsa, tugmani o‘chirish
           >
             <span className={liked ? "text-red-500" : "text-gray-400"}>
               {liked ? "❤️" : "🤍"}

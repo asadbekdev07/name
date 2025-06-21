@@ -1,49 +1,72 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { mockNames } from "@/lib/mockNames";
-import { Name } from "@/types/name";
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import NameCard from "@/components/NameCard";
+import { Name } from "@/types/name";
 
-interface Props {
-  params: {
-    lang: string;
-    query: string;
-  };
+function capitalize(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
-// Har bir so'z bosh harfini katta qiladi: "ali akbar" -> "Ali Akbar"
-function capitalizeWords(str: string): string {
-  return str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-}
+type NameWithStats = Name & { likes: number; views: number };
 
-export default function SearchResultPage({ params }: Props) {
-  const { query, lang } = params;
+export default function SearchResultPage() {
+  const { lang, query } = useParams();
+  const [results, setResults] = useState<NameWithStats[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = mockNames.filter(
-    (item: Name) =>
-      item.name.toLowerCase().includes(query.toLowerCase()) &&
-      item.lang === lang
-  );
+  useEffect(() => {
+    if (!lang || !query) return;
+
+    const filtered = mockNames.filter(
+      (item: Name) =>
+        item.name.toLowerCase().includes(String(query).toLowerCase()) &&
+        item.lang === lang
+    );
+
+    Promise.all(
+      filtered.map(async (item) => {
+        const docRef = doc(db, "names", item.name.toLowerCase()); // 🔧 fixed: removed `${lang}_`
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.exists() ? docSnap.data() : {};
+        return {
+          ...item,
+          likes: data.likes || 0,
+          views: data.views || 0,
+        };
+      })
+    ).then((enriched) => {
+      setResults(enriched);
+      setLoading(false);
+    });
+  }, [lang, query]);
+
+  if (!lang || !query) return null;
 
   return (
     <main className="max-w-5xl mx-auto p-4">
       <h1 className="text-xl font-semibold mb-6 text-gray-700">
-        Sizning so‘rovingiz „{capitalizeWords(query)}“ bo‘yicha topilgan natijalar soni: {""}
-        <span className="text-blue-700 font-bold">{filtered.length} ta</span>
+        Sizning so‘rovingiz «{capitalize(String(query))}» bo‘yicha topilgan natijalar soni:{" "}
+        <span className="text-blue-700 font-bold">{results.length} ta</span>
       </h1>
 
-      {filtered.length > 0 ? (
+      {loading ? (
+        <p className="text-gray-400">Yuklanmoqda...</p>
+      ) : results.length > 0 ? (
         <div className="grid gap-4">
-          {filtered.map((item) => (
+          {results.map((item) => (
             <NameCard
               key={item.id}
               id={item.id}
               name={item.name}
               meaning={item.meaning}
               lang={item.lang}
-              views={item.views || 0}
-              likes={item.likes || 0}
+              views={item.views}
+              likes={item.likes}
             />
           ))}
         </div>
