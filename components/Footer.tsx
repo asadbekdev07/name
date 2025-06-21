@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="mt-10 border-t">
@@ -17,10 +19,10 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-2 text-gray-800">Havolalar</h3>
             <ul className="space-y-1">
-              <li><a href="/uz" className="hover:underline">Bosh sahifa</a></li>
-              <li><a href="/uz/categories" className="hover:underline">Turkumlar</a></li>
-              <li><a href="/uz/popular/male" className="hover:underline">Erkaklar</a></li>
-              <li><a href="/uz/popular/female" className="hover:underline">Ayollar</a></li>
+              <li><Link href="/uz" className="hover:underline">Bosh sahifa</Link></li>
+              <li><Link href="/uz/categories" className="hover:underline">Turkumlar</Link></li>
+              <li><Link href="/uz/popular/male" className="hover:underline">Erkaklar</Link></li>
+              <li><Link href="/uz/popular/female" className="hover:underline">Ayollar</Link></li>
             </ul>
           </div>
 
