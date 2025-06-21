@@ -19,8 +19,7 @@ export default function NameDetailPage() {
 
   const matched = mockNames.find(
     (item) =>
-      item.name.toLowerCase() === name.toLowerCase() &&
-      item.lang === lang
+      item.name.toLowerCase() === name.toLowerCase() && item.lang === lang
   );
 
   if (!matched) return notFound();
@@ -28,7 +27,9 @@ export default function NameDetailPage() {
   // LocalStorage dan like holatini olish
   const [liked, setLiked] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem(`liked_${matched.name.toLowerCase()}`) === "true";
+      return (
+        localStorage.getItem(`liked_${matched.name.toLowerCase()}`) === "true"
+      );
     }
     return false;
   });
@@ -43,16 +44,21 @@ export default function NameDetailPage() {
     async function fetchData() {
       try {
         const docSnap = await getDoc(docRef);
+
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setLikes(data.likes ?? 0);
-          setViews(data.views ?? 0);
 
-          // Views ni oshirish Firestore-da
+          // views + 1 qilish
+          const updatedViews = (data.views ?? 0) + 1;
+
+          // birinchi yangilaymiz bazani
           await updateDoc(docRef, { views: increment(1) });
-          setViews((v) => (v !== null ? v + 1 : 1));
+
+          // holatni darhol ko‘rsatamiz
+          setLikes(data.likes ?? 0);
+          setViews(updatedViews);
         } else {
-          // Hujjat mavjud bo‘lmasa yangi yaratish
+          // hujjat mavjud bo‘lmasa
           await setDoc(docRef, { likes: 0, views: 1 });
           setLikes(0);
           setViews(1);
@@ -146,7 +152,9 @@ export default function NameDetailPage() {
 
         <div className="flex gap-4 text-sm text-gray-600 mb-6 items-center flex-wrap">
           <span
-            className={matched.gender === "male" ? "text-blue-600" : "text-pink-600"}
+            className={
+              matched.gender === "male" ? "text-blue-600" : "text-pink-600"
+            }
           >
             {matched.gender === "male" ? "♂ Erkak ismi" : "♀ Ayol ismi"}
           </span>
@@ -223,7 +231,9 @@ export default function NameDetailPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-700 mt-2">{person.description}</p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      {person.description}
+                    </p>
                   </div>
                 </li>
               ))}
