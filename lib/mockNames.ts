@@ -6,7 +6,10 @@ export const mockNames = [
     alphabet: "a",
     category: "arab", // turkum
     gender: "male", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "2",
@@ -16,6 +19,9 @@ export const mockNames = [
     category: "arab",
     gender: "female",
     lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.",
   },
   {
     id: "3",
@@ -25,6 +31,9 @@ export const mockNames = [
     category: "persian",
     gender: "female",
     lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.",
   },
   {
     id: "4",
@@ -33,7 +42,10 @@ export const mockNames = [
     alphabet: "a",
     category: "arab", // turkum
     gender: "male", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "5",
@@ -42,7 +54,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "6",
@@ -51,7 +66,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "7",
@@ -60,7 +78,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "8",
@@ -69,7 +90,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "9",
@@ -78,7 +102,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "10",
@@ -87,7 +114,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "11",
@@ -96,7 +126,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "12",
@@ -105,7 +138,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "13",
@@ -114,7 +150,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "14",
@@ -123,7 +162,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "15",
@@ -132,7 +174,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "16",
@@ -141,7 +186,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "17",
@@ -150,7 +198,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "18",
@@ -159,7 +210,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "19",
@@ -168,7 +222,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "20",
@@ -177,7 +234,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "21",
@@ -186,7 +246,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "22",
@@ -195,7 +258,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "23",
@@ -204,7 +270,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "24",
@@ -213,7 +282,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "25",
@@ -222,7 +294,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "26",
@@ -231,7 +306,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "27",
@@ -240,7 +318,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "28",
@@ -249,7 +330,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "29",
@@ -258,7 +342,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "30",
@@ -267,7 +354,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "31",
@@ -276,7 +366,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "32",
@@ -285,7 +378,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "33",
@@ -294,7 +390,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "34",
@@ -303,7 +402,10 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "35",
@@ -312,7 +414,22 @@ export const mockNames = [
     alphabet: "a",
     category: "persian", // turkum
     gender: "female", // jins
-    lang: "uz", // til
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
+  },
+  {
+    id: "36",
+    name: "Mustofo",
+    meaning: "Qizil holli, norli qiz.",
+    alphabet: "a",
+    category: "arab", // turkum
+    gender: "male", // jins
+    lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.", // til
   },
   {
     id: "999",
@@ -322,6 +439,9 @@ export const mockNames = [
     category: "arab",
     alphabet: "e", // ✅ har doim kichik harf bo‘lsin yaxshilik uchun
     lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.",
   },
   {
     id: "1000",
@@ -331,5 +451,8 @@ export const mockNames = [
     category: "arab",
     alphabet: "a", // ✅ har doim kichik harf bo‘lsin yaxshilik uchun
     lang: "uz",
+    origin: "Arabcha",
+    extraInfo:
+      "Bu ism diniy manbalarda tez-tez uchraydi. Ko‘pchilik sahobalarda ham bu ism bor edi.",
   },
 ];
