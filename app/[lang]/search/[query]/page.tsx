@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { mockNames } from "@/lib/mockNames";
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  query as firestoreQuery,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import NameCard from "@/components/NameCard";
 import { Name } from "@/types/name";
 
@@ -12,37 +16,44 @@ function capitalize(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
-type NameWithStats = Name & { likes: number; views: number };
-
 export default function SearchResultPage() {
   const { lang, query } = useParams();
-  const [results, setResults] = useState<NameWithStats[]>([]);
+  const [results, setResults] = useState<Name[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!lang || !query) return;
 
-    const filtered = mockNames.filter(
-      (item: Name) =>
-        item.name.toLowerCase().includes(String(query).toLowerCase()) &&
-        item.lang === lang
-    );
+    async function fetchNames() {
+      setLoading(true);
+      try {
+        const namesRef = collection(db, "names");
 
-    Promise.all(
-      filtered.map(async (item) => {
-        const docRef = doc(db, "names", item.name.toLowerCase()); // 🔧 fixed: removed `${lang}_`
-        const docSnap = await getDoc(docRef);
-        const data = docSnap.exists() ? docSnap.data() : {};
-        return {
-          ...item,
-          likes: data.likes || 0,
-          views: data.views || 0,
-        };
-      })
-    ).then((enriched) => {
-      setResults(enriched);
-      setLoading(false);
-    });
+        // Search: name starts with or contains the query (case-insensitive)
+        const snapshot = await getDocs(
+          firestoreQuery(namesRef, where("lang", "==", lang))
+        );
+
+        const filtered: Name[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data() as Name;
+          if (
+            data.name.toLowerCase().includes(String(query).toLowerCase())
+          ) {
+            filtered.push({ ...data, id: doc.id });
+          }
+        });
+
+        setResults(filtered);
+      } catch (err) {
+        console.error("Search error:", err);
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNames();
   }, [lang, query]);
 
   if (!lang || !query) return null;
