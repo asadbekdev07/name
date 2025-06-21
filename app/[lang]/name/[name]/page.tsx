@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { mockNames } from "@/lib/mockNames";
 import { mockFamousPeople } from "@/lib/mockFamousPeople";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { categoryLabels } from "@/lib/categoryLabels";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import LoadingSpinner from "@/components/LoadingSpinner"; // LoadingSpinner import qilindi
 
 export default function NameDetailPage() {
   const params = useParams();
@@ -20,48 +22,70 @@ export default function NameDetailPage() {
       item.lang === lang
   );
 
-  if (!matched) {
-    return <div className="text-center mt-20 text-xl">Ism topilmadi</div>;
-  }
+  if (!matched) return notFound();
 
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(0);
-  const [views, setViews] = useState(0);
-
-  useEffect(() => {
-    const docRef = doc(db, "names", matched.name.toLowerCase());
-
-    async function fetchData() {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setLikes(data.likes || 0);
-        setViews(data.views || 0);
-        // Views ni 1 ga oshirish
-        await updateDoc(docRef, { views: increment(1) });
-        setViews((v) => v + 1);
-      } else {
-        await setDoc(docRef, { likes: 0, views: 1 });
-        setLikes(0);
-        setViews(1);
-      }
+  // LocalStorage orqali liked statusini saqlash
+  const [liked, setLiked] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(`liked_${matched.name.toLowerCase()}`) === "true";
     }
+    return false;
+  });
 
-    fetchData();
-
-    // localStorage dan like holatini o'qish
-    const likedFromStorage = localStorage.getItem(`liked-${matched.name.toLowerCase()}`);
-    setLiked(likedFromStorage === "true");
-  }, [matched.name]);
+  // likes va views ning boshlang‘ich qiymati null, Firestore’dan kelguncha
+  const [likes, setLikes] = useState<number | null>(null);
+  const [views, setViews] = useState<number | null>(null);
 
   const docRef = doc(db, "names", matched.name.toLowerCase());
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setLikes(data.likes || 0);
+          setViews(data.views || 0);
+
+          // Views ni 1 ga oshirish
+          await updateDoc(docRef, { views: increment(1) });
+          setViews((v) => (v !== null ? v + 1 : 1));
+        } else {
+          // Agar hujjat yo'q bo'lsa yaratish
+          await setDoc(docRef, { likes: 0, views: 1 });
+          setLikes(0);
+          setViews(1);
+        }
+      } catch (error) {
+        console.error("Firestore fetch error:", error);
+        // Muammo bo'lsa ham 0 qiymat qo'yish
+        setLikes(0);
+        setViews(0);
+      }
+    }
+    fetchData();
+  }, [matched.name]);
+
+  // LocalStorage ni update qilish uchun effect
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (liked) {
+        localStorage.setItem(`liked_${matched.name.toLowerCase()}`, "true");
+      } else {
+        localStorage.removeItem(`liked_${matched.name.toLowerCase()}`);
+      }
+    }
+  }, [liked, matched.name]);
+
   const handleLikeToggle = async () => {
-    const newLiked = !liked;
-    setLiked(newLiked);
-    setLikes((prev) => prev + (newLiked ? 1 : -1));
-    await updateDoc(docRef, { likes: increment(newLiked ? 1 : -1) });
-    localStorage.setItem(`liked-${matched.name.toLowerCase()}`, newLiked.toString());
+    try {
+      const change = liked ? -1 : 1;
+      setLiked(!liked);
+      setLikes((prev) => (prev !== null ? prev + change : change));
+      await updateDoc(docRef, { likes: increment(change) });
+    } catch (error) {
+      console.error("Error updating likes:", error);
+    }
   };
 
   const handleShare = () => {
@@ -95,6 +119,15 @@ export default function NameDetailPage() {
       person.lang === lang
   );
 
+  // Loading spinner likes yoki views hali null bo'lsa ko'rsatiladi
+  if (likes === null || views === null) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-sm">
@@ -103,6 +136,7 @@ export default function NameDetailPage() {
           <button
             onClick={handleSpeak}
             className="text-sm text-gray-500 hover:text-blue-500 transition"
+            aria-label="Ismni eshitish"
           >
             🔊 Eshitish
           </button>
@@ -110,9 +144,7 @@ export default function NameDetailPage() {
 
         <div className="flex gap-4 text-sm text-gray-600 mb-6 items-center flex-wrap">
           <span
-            className={
-              matched.gender === "male" ? "text-blue-600" : "text-pink-600"
-            }
+            className={matched.gender === "male" ? "text-blue-600" : "text-pink-600"}
           >
             {matched.gender === "male" ? "♂ Erkak ismi" : "♀ Ayol ismi"}
           </span>
@@ -120,6 +152,8 @@ export default function NameDetailPage() {
           <button
             onClick={handleLikeToggle}
             className="flex items-center gap-1 text-lg cursor-pointer"
+            aria-pressed={liked}
+            aria-label={liked ? "Like o'chirish" : "Like berish"}
           >
             <span className={liked ? "text-red-500" : "text-gray-400"}>
               {liked ? "❤️" : "🤍"}
