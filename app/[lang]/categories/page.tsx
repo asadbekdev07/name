@@ -1,8 +1,12 @@
 // app/[lang]/categories/page.tsx
 
+"use client";
+
 import Link from "next/link";
-import { mockNames } from "@/lib/mockNames";
+import { useEffect, useState } from "react";
 import { categoryLabels } from "@/lib/categoryLabels";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Name } from "@/types/name";
 
 interface Props {
@@ -13,19 +17,39 @@ interface Props {
 
 export default function CategoriesPage({ params }: Props) {
   const { lang } = params;
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
 
-  // Har bir kategoriya uchun ism sonini hisoblash
-  const categoryCounts: Record<string, number> = {};
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const namesRef = collection(db, "names");
+        const q = query(namesRef, where("lang", "==", lang));
+        const snapshot = await getDocs(q);
 
-  mockNames.forEach((item: Name) => {
-    if (item.lang === lang) {
-      if (!categoryCounts[item.category]) {
-        categoryCounts[item.category] = 1;
-      } else {
-        categoryCounts[item.category]++;
+        const counts: Record<string, number> = {};
+
+        snapshot.forEach((doc) => {
+          const data = doc.data() as Name;
+          if (data.category) {
+            counts[data.category] = (counts[data.category] || 0) + 1;
+          }
+        });
+
+        setCategoryCounts(counts);
+      } catch (error) {
+        console.error("Kategoriya maʼlumotlarini olishda xatolik:", error);
+      } finally {
+        setLoading(false);
       }
     }
-  });
+
+    fetchCategories();
+  }, [lang]);
+
+  if (loading) {
+    return <p className="text-center text-gray-500">Yuklanmoqda...</p>;
+  }
 
   return (
     <main className="max-w-5xl mx-auto p-4">

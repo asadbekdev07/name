@@ -1,11 +1,17 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { mockNames } from "@/lib/mockNames";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Name } from "@/types/name";
 import AlphabetFilter from "@/components/AlphabetFilter";
 import SimpleNameItem from "@/components/SimpleNameItem";
-import { useMemo } from "react";
 
 interface Props {
   params: {
@@ -25,6 +31,9 @@ export default function AlphabetPage({ params }: Props) {
   const pageParam = searchParams.get("page") || "1";
   const currentPage = parseInt(pageParam);
 
+  const [filtered, setFiltered] = useState<Name[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const updateQuery = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
     if (value) newParams.set(key, value);
@@ -34,20 +43,41 @@ export default function AlphabetPage({ params }: Props) {
     router.push(`?${newParams.toString()}`);
   };
 
-  const filtered = useMemo(() => {
-    return mockNames.filter(
-      (item: Name) =>
-        item.alphabet.toLowerCase() === letter.toLowerCase() &&
-        item.lang === lang &&
-        (!gender || item.gender === gender)
-    );
-  }, [letter, lang, gender]);
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        let q = query(
+          collection(db, "names"),
+          where("lang", "==", lang),
+          where("alphabet", "==", letter.toLowerCase())
+        );
+
+        const snapshot = await getDocs(q);
+        let results: Name[] = [];
+
+        snapshot.forEach((doc) => {
+          const data = doc.data() as Name;
+          if (!gender || data.gender === gender) {
+            results.push({ ...data, id: doc.id });
+          }
+        });
+
+        setFiltered(results);
+      } catch (error) {
+        console.error("❌ Firestoredan o‘qishda xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [lang, letter, gender]);
 
   const paginated = filtered.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
 
   return (
@@ -79,7 +109,9 @@ export default function AlphabetPage({ params }: Props) {
       </h1>
 
       {/* Results */}
-      {paginated.length > 0 ? (
+      {loading ? (
+        <p className="text-gray-500">⏳ Yuklanmoqda...</p>
+      ) : paginated.length > 0 ? (
         <ul className="bg-gray-50 rounded-md shadow-sm border border-gray-200">
           {paginated.map((item) => (
             <SimpleNameItem

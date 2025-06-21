@@ -1,45 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import { mockNames } from "@/lib/mockNames";
-import { mockFamousPeople } from "@/lib/mockFamousPeople";
-import { notFound } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
-import { categoryLabels } from "@/lib/categoryLabels";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Comments from "@/components/Comments";
+import { categoryLabels } from "@/lib/categoryLabels";
 
 export default function NameDetailPage() {
   const params = useParams();
   const name = params?.name || "";
   const lang = params?.lang || "";
 
-  const matched = mockNames.find(
-    (item) =>
-      item.name.toLowerCase() === name.toLowerCase() && item.lang === lang
-  );
-
-  if (!matched) return notFound();
-
-  // LocalStorage dan like holatini olish
-  const [liked, setLiked] = useState(() => {
-    if (typeof window !== "undefined") {
-      return (
-        localStorage.getItem(`liked_${matched.name.toLowerCase()}`) === "true"
-      );
-    }
-    return false;
-  });
-
-  // likes va views ning dastlabki qiymati null — loading ko‘rsatish uchun
+  const [matched, setMatched] = useState<any>(null);
+  const [notFoundFlag, setNotFoundFlag] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState<number | null>(null);
   const [views, setViews] = useState<number | null>(null);
 
-  const docRef = doc(db, "names", matched.name.toLowerCase());
+  const docRef = doc(db, "names", name.toLowerCase());
 
+  // 🔍 Ismni Firestore'dan olish
   useEffect(() => {
     async function fetchData() {
       try {
@@ -47,62 +30,70 @@ export default function NameDetailPage() {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
+          setMatched({ id: docSnap.id, ...data });
 
-          // views + 1 qilish
+          // Viewsni oshirish
           const updatedViews = (data.views ?? 0) + 1;
-
-          // birinchi yangilaymiz bazani
           await updateDoc(docRef, { views: increment(1) });
 
-          // holatni darhol ko‘rsatamiz
+          // Local holatni yangilash
           setLikes(data.likes ?? 0);
           setViews(updatedViews);
+
+          // LocalStorage'dan like holati
+          if (typeof window !== "undefined") {
+            const isLiked = localStorage.getItem(`liked_${name.toLowerCase()}`) === "true";
+            setLiked(isLiked);
+          }
         } else {
-          // hujjat mavjud bo‘lmasa
-          await setDoc(docRef, { likes: 0, views: 1 });
+          // Hujjat mavjud emas
+          await setDoc(docRef, {
+            name,
+            lang,
+            likes: 0,
+            views: 1,
+            gender: "",
+            meaning: "",
+            category: "",
+            extraInfo: "",
+          });
+          setMatched({ name, lang, likes: 0, views: 1 });
           setLikes(0);
           setViews(1);
         }
       } catch (error) {
-        console.error("Firestore fetch error:", error);
-        setLikes(0);
-        setViews(0);
+        console.error("Firestore error:", error);
+        setNotFoundFlag(true);
       }
     }
-    fetchData();
-  }, [matched.name]);
 
-  useEffect(() => {
-  if (typeof window !== "undefined") {
-    if (liked) {
-      localStorage.setItem(`liked_${matched.name.toLowerCase()}`, "true");
-    } else {
-      localStorage.removeItem(`liked_${matched.name.toLowerCase()}`);
-    }
-  }
-}, [liked, matched.name]);
+    if (name && lang) fetchData();
+  }, [name, lang]);
 
+  // ❌ Topilmasa
+  if (notFoundFlag) return notFound();
 
-  // Like tugmasi bosilganda
+  // ❤️ Like tugmasi
   const handleLikeToggle = async () => {
-  try {
-    if (liked) {
-      // unlike qilinmoqda
-      setLiked(false);
-      setLikes((prev) => (prev !== null ? prev - 1 : 0));
-      await updateDoc(docRef, { likes: increment(-1) });
-    } else {
-      // like qilinmoqda
-      setLiked(true);
-      setLikes((prev) => (prev !== null ? prev + 1 : 1));
-      await updateDoc(docRef, { likes: increment(1) });
+    try {
+      const change = liked ? -1 : 1;
+      setLiked(!liked);
+      setLikes((prev) => (prev !== null ? prev + change : change));
+      await updateDoc(docRef, { likes: increment(change) });
+
+      if (typeof window !== "undefined") {
+        if (!liked) {
+          localStorage.setItem(`liked_${name.toLowerCase()}`, "true");
+        } else {
+          localStorage.removeItem(`liked_${name.toLowerCase()}`);
+        }
+      }
+    } catch (error) {
+      console.error("Like error:", error);
     }
-  } catch (error) {
-    console.error("Error toggling like:", error);
-  }
-};
+  };
 
-
+  // 📤 Ulashish
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -111,31 +102,18 @@ export default function NameDetailPage() {
         url: window.location.href,
       });
     } else {
-      alert("Ulashish funksiyasi qo'llab-quvvatlanmaydi.");
+      alert("Ulashish funksiyasi mavjud emas.");
     }
   };
 
+  // 🔊 Eshitish
   const handleSpeak = () => {
     const utterance = new SpeechSynthesisUtterance(matched.name);
     utterance.lang = "uz-UZ";
     speechSynthesis.speak(utterance);
   };
 
-  const similar = mockNames.filter(
-    (item) =>
-      item.name.toLowerCase().includes(name.toLowerCase()) &&
-      item.name.toLowerCase() !== name.toLowerCase() &&
-      item.lang.toLowerCase() === lang.toLowerCase()
-  );
-
-  const famous = mockFamousPeople.filter(
-    (person) =>
-      person.relatedName.toLowerCase() === matched.name.toLowerCase() &&
-      person.lang === lang
-  );
-
-  // Loading spinner ko‘rsatish
-  if (likes === null || views === null) {
+  if (!matched || likes === null || views === null) {
     return (
       <main className="min-h-screen flex items-center justify-center">
         <LoadingSpinner />
@@ -158,11 +136,7 @@ export default function NameDetailPage() {
         </div>
 
         <div className="flex gap-4 text-sm text-gray-600 mb-6 items-center flex-wrap">
-          <span
-            className={
-              matched.gender === "male" ? "text-blue-600" : "text-pink-600"
-            }
-          >
+          <span className={matched.gender === "male" ? "text-blue-600" : "text-pink-600"}>
             {matched.gender === "male" ? "♂ Erkak ismi" : "♀ Ayol ismi"}
           </span>
           <span className="text-lg">👁 {views}</span>
@@ -170,7 +144,6 @@ export default function NameDetailPage() {
             onClick={handleLikeToggle}
             className="flex items-center gap-1 text-lg cursor-pointer"
             aria-pressed={liked}
-            aria-label={liked ? "Like o'chirish" : "Like berish"}
           >
             <span className={liked ? "text-red-500" : "text-gray-400"}>
               {liked ? "❤️" : "🤍"}
@@ -204,68 +177,6 @@ export default function NameDetailPage() {
             {categoryLabels[matched.category] || matched.category}
           </Link>
         </p>
-
-        {famous.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              {matched.name} ismli mashhur insonlar
-            </h2>
-            <ul className="space-y-4">
-              {famous.map((person) => (
-                <li
-                  key={person.id}
-                  className="flex items-start gap-4 p-5 border border-gray-200 rounded-2xl bg-white hover:shadow-md transition"
-                >
-                  <div className="w-12 h-12 flex-shrink-0 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold">
-                    {person.name[0]}
-                  </div>
-                  <div className="flex-1">
-                    <Link href={`/${lang}/person/${person.id}`}>
-                      <h3 className="text-lg font-semibold text-blue-800 hover:underline">
-                        {person.name}
-                      </h3>
-                    </Link>
-                    <div className="flex gap-2 mt-2 flex-wrap text-xs">
-                      {person.profession && (
-                        <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-full text-gray-700">
-                          {person.profession}
-                        </span>
-                      )}
-                      {person.lifespan && (
-                        <span className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-full text-gray-700">
-                          {person.lifespan}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-700 mt-2">
-                      {person.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {similar.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
-              Shunga o‘xshash ismlar
-            </h2>
-            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {similar.slice(0, 10).map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={`/${lang}/name/${item.name.toLowerCase()}`}
-                    className="block bg-blue-50 hover:bg-blue-100 text-center py-2 px-4 rounded-lg text-blue-700 font-medium transition"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
 
         {/* Fikrlar bo‘limi */}
         <Comments nameId={matched.name.toLowerCase()} />

@@ -1,8 +1,14 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useMemo } from "react";
-import { mockNames } from "@/lib/mockNames";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Name } from "@/types/name";
 import AlphabetFilter from "@/components/AlphabetFilter";
 import SimpleNameItem from "@/components/SimpleNameItem";
@@ -16,7 +22,6 @@ interface Props {
 
 const ITEMS_PER_PAGE = 20;
 
-// Mapping origin to readable labels
 const originLabels: Record<string, string> = {
   arab: "Arabcha",
   persian: "Fors-tojikcha",
@@ -24,7 +29,6 @@ const originLabels: Record<string, string> = {
   russian: "Ruscha",
   english: "Inglizcha",
   uzbek: "O‘zbekcha",
-  // kerak bo‘lsa boshqa tillarni ham qo‘shing
 };
 
 export default function CategoryPage({ params }: Props) {
@@ -37,21 +41,47 @@ export default function CategoryPage({ params }: Props) {
   const pageParam = searchParams.get("page") || "1";
   const pageNumber = parseInt(pageParam);
 
-  const filtered = useMemo(() => {
-    return mockNames.filter(
-      (item: Name) =>
-        item.category === origin &&
-        item.lang === lang &&
-        (!gender || item.gender === gender) &&
-        (!letter || item.alphabet.toLowerCase() === letter.toLowerCase())
-    );
+  const [filtered, setFiltered] = useState<Name[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNames() {
+      setLoading(true);
+      try {
+        let q = query(
+          collection(db, "names"),
+          where("lang", "==", lang),
+          where("category", "==", origin)
+        );
+
+        const snapshot = await getDocs(q);
+        let results: Name[] = [];
+
+        snapshot.forEach((doc) => {
+          const data = doc.data() as Name;
+          if (
+            (!gender || data.gender === gender) &&
+            (!letter || data.alphabet?.toLowerCase() === letter.toLowerCase())
+          ) {
+            results.push({ ...data, id: doc.id });
+          }
+        });
+
+        setFiltered(results);
+      } catch (error) {
+        console.error("❌ Firestoredan o‘qishda xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNames();
   }, [lang, origin, gender, letter]);
 
   const paginated = filtered.slice(
     (pageNumber - 1) * ITEMS_PER_PAGE,
     pageNumber * ITEMS_PER_PAGE
   );
-
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
 
   const updateQuery = (key: string, value: string) => {
@@ -63,24 +93,21 @@ export default function CategoryPage({ params }: Props) {
 
   return (
     <main className="max-w-5xl mx-auto p-4">
-      {/* ALPHABET FILTER */}
       <AlphabetFilter
         lang={lang}
         selected={letter}
         onSelect={(ltr) => updateQuery("letter", ltr)}
       />
 
-      {/* GENDER FILTER */}
       <div className="flex gap-4 mb-6 justify-center">
-        {[
-          { value: "", label: "Barchasi" },
+        {[{ value: "", label: "Barchasi" },
           { value: "male", label: "Erkaklar" },
           { value: "female", label: "Ayollar" },
         ].map((g) => (
           <button
             key={g.value}
             onClick={() => updateQuery("gender", g.value)}
-            className={`px-4 py-1 rounded border text-sm transition-all ${
+            className={`px-4 py-1 rounded border text-sm transition ${
               gender === g.value ? "bg-blue-600 text-white" : "hover:bg-gray-100"
             }`}
           >
@@ -89,18 +116,19 @@ export default function CategoryPage({ params }: Props) {
         ))}
       </div>
 
-      {/* NATIJA MIQDORI HEADER */}
       <h1 className="text-lg font-semibold mb-6 text-gray-700">
-        Sizning so‘rovingiz „{originLabels[origin] || origin}“ ismlar turkumida topilgan natijalar soni:{" "}
+        Sizning so‘rovingiz „{originLabels[origin] || origin}“ turkumida topilgan ismlar soni:{" "}
         <span className="text-blue-700 font-bold">{filtered.length} ta</span>
       </h1>
 
-      {/* ISMLAR */}
-      {paginated.length > 0 ? (
+      {loading ? (
+        <p className="text-gray-500">⏳ Yuklanmoqda...</p>
+      ) : paginated.length > 0 ? (
         <ul className="bg-gray-50 rounded-md shadow-sm border border-gray-200">
           {paginated.map((item) => (
             <SimpleNameItem
               key={item.id}
+              id={item.id}
               name={item.name}
               lang={item.lang}
               gender={item.gender}
@@ -108,10 +136,9 @@ export default function CategoryPage({ params }: Props) {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500">Bu filtrlarga mos ism topilmadi.</p>
+        <p className="text-gray-500">🕵️‍♂️ Bu filtrlarga mos ism topilmadi.</p>
       )}
 
-      {/* PAGINATION */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-6 gap-2">
           {Array.from({ length: totalPages }).map((_, i) => {
