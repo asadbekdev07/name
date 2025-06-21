@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Blog } from "@/types/blog";
 import Image from "next/image";
@@ -16,12 +22,14 @@ export default function BlogDetailedPage() {
   useEffect(() => {
     async function fetchBlog() {
       try {
-        const ref = doc(db, "blogs", slug);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          setBlog({ id: snap.id, ...(snap.data() as Blog) });
+        const q = query(collection(db, "blogs"), where("slug", "==", slug));
+        const snap = await getDocs(q);
+
+        if (!snap.empty) {
+          const docSnap = snap.docs[0];
+          setBlog({ id: docSnap.id, ...(docSnap.data() as Blog) });
         } else {
-          console.warn("Blog not found");
+          console.warn("❌ Blog not found");
         }
       } catch (error) {
         console.error("❌ Blogni olishda xatolik:", error);
@@ -41,7 +49,10 @@ export default function BlogDetailedPage() {
     return (
       <main className="max-w-3xl mx-auto p-4 text-center">
         <h1 className="text-xl text-red-600 font-semibold">Blog topilmadi</h1>
-        <Link href={`/${lang}/blog`} className="text-blue-600 underline mt-4 inline-block">
+        <Link
+          href={`/${lang}/blog`}
+          className="text-blue-600 underline mt-4 inline-block"
+        >
           ← Boshqa bloglar
         </Link>
       </main>
@@ -54,28 +65,27 @@ export default function BlogDetailedPage() {
 
       <div className="text-sm text-gray-500 mb-6">
         Muallif: {blog.author || "Noma'lum"} •{" "}
-        {blog.createdAt?.toDate().toLocaleDateString("uz-UZ", {
+        {blog.createdAt?.toDate?.().toLocaleDateString("uz-UZ", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })}
       </div>
 
-      {blog.image && (
+      {blog.imageUrl && (
         <div className="mb-6">
-          <Image
-            src={blog.image}
-            alt={blog.title}
-            width={800}
-            height={400}
-            className="rounded-lg w-full h-auto object-cover"
-          />
+          <img
+  src="https://via.placeholder.com/800x400.png?text=Hello"
+  alt="Test image"
+  className="rounded-lg w-full h-auto object-cover"
+/>
         </div>
       )}
 
-      <article className="prose max-w-none text-gray-800">
-        {blog.content}
-      </article>
+      <article
+        className="prose max-w-none text-gray-800"
+        dangerouslySetInnerHTML={{ __html: blog.content }}
+      />
     </main>
   );
 }
